@@ -273,5 +273,117 @@ set -exo pipefail
 
 cat logfile | grep "ERROR"
  - if log file is stored on some other storage like google drive
- - then what ?
+ - then what ?, use curl command
+
+curl https://github.com/sauravsaxena7/Linux-for-Devops/blob/main/logfile.log
+
+luffy@luffy-kafka-server:~/shell-script$ curl https://raw.githubusercontent.com/sauravsaxena7/Linux-for-Devops/refs/heads/main/logfile.log | grep ERROR
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 22928  100 22928    0     0  51430      0 --:--:-- --:--:-- --:--:-- 51523
+03/22 08:53:38 ERROR  :......router_forward_getOI:         route handle:   7f5251c8
+03/22 08:53:38 ERROR  :.......mailslot_send: sending to (9.67.116.99:0)
+03/22 08:54:24 ERROR  :......router_forward_getOI:         out inf:   9.67.116.98
+03/22 08:54:53 ERROR  :..mailslot_sitter: process received signal SIGTERM
+
+There one alternative command.
+wget command:
+ - instead of printing like curl.
+ - download the file.
+
+luffy@luffy-kafka-server:~/shell-script$ wget  https://raw.githubusercontent.com/sauravsaxena7/Linux-for-Devops/refs/heads/main/logfile.log
+--2026-03-16 03:22:22--  https://raw.githubusercontent.com/sauravsaxena7/Linux-for-Devops/refs/heads/main/logfile.log
+Resolving raw.githubusercontent.com (raw.githubusercontent.com)... 185.199.108.133
+Connecting to raw.githubusercontent.com (raw.githubusercontent.com)|185.199.108.133|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 22928 (22K) [text/plain]
+Saving to: ‘logfile.log’
+
+logfile.log          100%[======================>]  22.39K  --.-KB/s    in 0s      
+
+2026-03-16 03:22:22 (66.1 MB/s) - ‘logfile.log’ saved [22928/22928]
+
+luffy@luffy-kafka-server:~/shell-script$ ls
+logfile.log  nodeHealth.sh
+
+luffy@luffy-kafka-server:~/shell-script$ cat logfile.log | grep ERROR
+03/22 08:53:38 ERROR  :......router_forward_getOI:         route handle:   7f5251c8
+03/22 08:53:38 ERROR  :.......mailslot_send: sending to (9.67.116.99:0)
+03/22 08:54:24 ERROR  :......router_forward_getOI:         out inf:   9.67.116.98
+03/22 08:54:53 ERROR  :..mailslot_sitter: process received signal SIGTERM
+
+
+su command:
+ - switch user
+ - sudo su -
+   - go to the root user.
+luffy@luffy-kafka-server:~/shell-script$ sudo su -
+[sudo] password for luffy: 
+root@luffy-kafka-server:~# logout
+luffy@luffy-kafka-server:~/shell-script$ 
+
+
+luffy@luffy-kafka-server:~/shell-script$ su harsha
+su: user harsha does not exist or the user entry does not contain all the required fields
  
+find command: find / -name fileName
+ - find file in vms
+luffy@luffy-kafka-server:~/shell-script$ find / -name pam
+find: ‘/boot/lost+found’: Permission denied
+find: ‘/root’: Permission denied
+find: ‘/etc/multipath’: Permission denied
+find: ‘/etc/ssl/private’: Permission denied
+find: ‘/etc/polkit-1/rules.d’: Permission denied
+find: ‘/etc/credstore.encrypted’: Permission denied 
+
+need to use sudo.
+luffy@luffy-kafka-server:~/shell-script$ sudo find / -name pam
+/var/lib/pam
+/usr/share/pam
+ - only current user access folder will be shown.
+ - current user doesnot have access to all pam files.
+
+if Else and for loop:
+
+luffy@luffy-kafka-server:~/shell-script$ cat ifElse.sh
+a=4
+b=10
+if[ $a > $b ]
+then 
+	echo "a is greater than b"
+else
+   echo "b is greate than a"
+
+
+#iteration: -> for
+#
+
+for i in {1.100}; do echo $1; done
+
+Trap command:
+  - trapping signals
+what are signals:
+  - action performed by your keyboard or using some command
+  - kill -9 proceesId
+  - what behind.
+  - there signal pass to the linux. to kill the process.
+  - another example, type control + c, for stop executing script.
+  - in linux there is lot of signal
+
+trap command is used to prevent to signal action like:
+ - i am running a important script, but somebody type control + c
+ - then my script execution stoped.
+ - i don't want to let that happen.
+we are using trapped command 
+ - in trapped command we have to metion what type of signals we need to avoid during script execution
+trap "echo don't use the ctrl + c" SIGINT^c
+
+
+
+
+
+
+
+
+
+
