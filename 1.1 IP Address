@@ -1,0 +1,145 @@
+IP address
+  - Generate
+    - Unique address to connect DEVICE from the network.
+  - Payments
+  - Instagram
+A device can used multiple things like instagram , google and youtube.
+if you block, track or monitor the activity some particulart devive, how could you identify that device.
+
+IP-address
+IPV4
+ - Using ipv4, you will generate unique identification number
+ - 172.16.3.4, 10.1.2.4
+ - ipconfig command
+ - 172.16.3.4
+ - 172 -> (0 to 255) 
+ - 16  -> (0 to 255) 
+ - 3   -> (0 to 255) 
+ - 4   -> (0 to 255) 
+ - no. of unique IP we can generate = (0 to 255) * (0 to 255) * (0 to 255) * (0 to 255) 
+ - why (0 to 255)
+ - computer only understand bits. 0 or 1
+ - 172 -> 1 byte -> 8 bits 
+ - IPV4 -> IS OF 8 BYTES or 32 bits.
+ - each byte seperate by dots
+ - this is standard you cannot change it.
+ - 600.400.150.10 incorrect
+ - 192.168.12.14 correct
+ - 128 64 32 16 8 4 2 1
+ -  1   1  0 0  0 0 0 0
+ - 128 + 64 = 192
+
+
+SUBNET:
+ - Requesting 65k ip addresses from network provider
+ - maximum no people is 40k in school
+ - From a office free wifi , multiple device is connected
+ - new hire is access a malicious website which is written by hacker.
+ - hacker got access to particulat new hire device.
+ - same free wifi give connection to other employees, so hacker got those access as well.
+ - technically hacker got access of the devices which is connected to same free wifi.
+ - some finalcial, payroll and sensitive information which is stored on server, hacker can access these resources.
+
+There is concept called Sbunet. 
+ - it's a partition of network 
+ - like all sensitive inforamation is stored in network1.
+ - Network2 is for all employee.
+ - security, privacy and isolation.
+
+private subnet: has not access to internet
+
+public subnet: has access to internet.
+ - on cloud you need to provide route table to define public or private subnet.
+
+Now we have 65k total ip addresses.
+ - how could be divide those ip accross the different private or public subnet.
+
+ - let's in finance network we need 256 ip address.
+ - rest of them need be used as free.
+
+Public Cloud provider:
+ - Ask CIDR range. 
+ - this is way to divide how many ip address is lie in a particular subnet.
+
+CIDR:
+ -Amazon Virtual Private Cloud (Amazon VPC) is a secure, isolated virtual network.
+ - It's allows organizations to host their Amazon Web Services (AWS) resources. 
+ - You can now use Amazon VPC IP Address Manager (IPAM) to allocate contiguous IPv6 Classless Inter-Domain Routing (CIDR) blocks).
+
+How CIDR works.
+ - go to VPC -> subnet -> ask for CIDR range.
+ - 24 is the number ip in a particuar Sbunet
+ - 172.16.0.0 --- 172.16.255.255 = 65k ip's
+ - -------- | -------- | -------- | --------
+ - 8bits      8bits.     8bits.     8bits
+ - 0-255.   | 0-255.   | 0-255.   | 0-255
+ - we need 256 ip address for finance subnet.
+ - total bits = 8*4 = 32 bits
+ - first 3 bytes is common. 
+ - last byte is lie between 0 --- to --- 255
+ - last 8 bit will change can give 256 new ip address for finance subnet
+ - so why 172.16.0.0 / 24
+ - so, why 24, because we cancel or common first 3 bytes.
+ - -------- | -------- | -------- | --------
+ - 8bits      8bits.     8bits.     8bits
+ - common.    common.    common.    0. -- to -- 255
+ - which is 1 byte = 8bit's
+ - so, 8bit's * 3 = 24 bit's cancel or common for 256 new ip address.
+ - 172.16.0.0 -> 172.16.0.1 -> 172.16.0.2 -> 172.16.0.3 ------- to ----- 172.16.0.254, 172.16.0.255
+ - first 3 bytes is common.
+ - 172.16.0.0 / 24
+ - 32-24 ===> 2^(32-24) ===> 2^8 = 256 ip addresses.
+ - this is called CIDR range.
+ 
+
+Now we want only 2 ip addresses for payment subnet.
+ - satrting ip range is 172.16.3.0
+ - -------- | -------- | -------- | --------
+ - total 32 bit's
+ - every bit is represented in 2^.
+ - if we write 172.16.3.0/31
+ - so we cancelled 31 bit's or hyphen(-)
+ - so we have only last bit left which change.
+ - 32-31 ==> 2^(32 - 31) = 2^1 = we got 2 ip addresses
+
+
+10.0.0.1/8 classs A ip addresses
+ - 32-8 ==> 2^(32 - 8) = 2^24 = we got huge numbe ip addresses
+ /16 => class B ip addresses
+ /24 => class c ip addresses
+
+Most of the time private network ip starts from
+ - 172, 192, and 10
+ - these are best parctices.
+8.8.8.8 -> public ip which is taken by google.com
+
+PORTS : no. process is running on virtual machine to uniquily identified
+ - :80
+ - :443
+ - :3600
+ - :8080 ->  jenkins taken --> can be changed
+ 
+ for accesing vm app.
+ 3.4.5.8:9191
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+

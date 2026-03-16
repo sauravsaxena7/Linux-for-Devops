@@ -1,0 +1,187 @@
+Shell scripting for Devops.
+ - For Automate the process.
+
+ touch command:
+  - utility sets the modification and access times of files.
+  - If any file doesnot exist, it is created with default permission.
+
+man command:
+ - The man command in Linux is a built-in utility used to access manual pages (man pages), which provide detailed documentation about commands, system calls, library functions, configuration files, and other aspects of Unix-like operating systems.  It is the primary way to learn how to use Linux commands effectively. 
+ - man ls
+ - to exit the man command type "q"
+
+vim or vi command:
+ - it used to open the existing file 
+ - if file is not exist then first it will create and open it.
+ - what's the use of touch command.
+ - touch command is used for automation, let's we need to create 1000 files. here we cannot use vim or vi command.
+ - for writting any thing in opend file.
+ - need to go in insert mode by enter escape or esc then enter "i"
+ - for saving file first enter "esc" then type ":wq!" then enter
+ - simple for not saving the file type ":q!" enter.
+
+"#!/" :-> shebang
+ - #!/bin/ dash
+           bash ==> this is the executable options to execute shell script.
+           sh
+           ksh
+
+"bash" is mostly used accross the industry.
+ - #!/bin/sh -----> #!/bin/bash
+ - through the process of linking sh is redirect or forwarded to bash executables only.
+ - ubantu uses by default #!/bin/dash
+   - #!/bin/bash or #!/bin/sh will redirect to #!/bin/dash only.
+   - your script will not work on ubantu machine.
+
+
+cat command:
+ - look or print content of the file only.
+sauravsuman@Sauravs-MacBook-Pro shell-sript-tut % cat first-shell-script.sh
+#!/bin/bash
+
+echo "saurav first shell program"
+
+To execute script file.
+sh file.sh or ./file.sh
+
+./ is used to execute any execuatble file like python or shel script.
+
+sauravsuman@Sauravs-MacBook-Pro shell-sript-tut % sh first-shell-script.sh
+sh: sauravsuman@Sauravs-MacBook-Pro: No such file or directory
+zsh: no such file or directory: #/bin/bash
+saurav first shell program
+zsh: command not found: sauravsuman@Sauravs-MacBook-Pro
+
+
+sauravsuman@Sauravs-MacBook-Pro shell-sript-tut % ./first-shell-script.sh
+zsh: permission denied: ./first-shell-script.sh
+
+ - in linux , although you create this file.
+ - but linux want to understand, who can execute this file.
+ - security purpose
+
+chmod command: grants permission to file.
+ - ch: change the permission
+chmod has 3 categories 
+ - root user, permission for all user 7 for the all users
+ - waht is your group permission 7 for he group
+ - what are your permission 7 for myself
+
+chmod 777 file.sh command:
+ - it's grant permission to every body
+sauravsuman@Sauravs-MacBook-Pro shell-sript-tut % chmod 777 first-shell-script.sh
+sauravsuman@Sauravs-MacBook-Pro shell-sript-tut % ./first-shell-script.sh
+saurav first shell program
+
+chmod 4 2 1
+ - 4 ->read
+ - 2 ->write
+ - 1 ->execute
+
+ user -> owner -> 4 ->read
+ group -> which group you belongs - > 4 reads
+ everyone
+
+ history command:
+  - history of all your command you have used.
+
+
+PWD command:
+  - current working directory 
+sauravsuman@Sauravs-MacBook-Pro shell-sript-tut % pwd
+/Users/sauravsuman/Documents/Linux for Devops/shell-sript-tut  
+
+mkdir command:
+sauravsuman@Sauravs-MacBook-Pro shell-sript-tut % mkdir new-script-folder
+sauravsuman@Sauravs-MacBook-Pro shell-sript-tut % ls
+first-shell-script.sh	new-script-folder
+
+cd command:
+ - change directory
+sauravsuman@Sauravs-MacBook-Pro shell-sript-tut % cd new-script-folder
+sauravsuman@Sauravs-MacBook-Pro new-script-folder %  
+
+sauravsuman@Sauravs-MacBook-Pro new-script-folder % pwd
+/Users/sauravsuman/Documents/Linux for Devops/shell-sript-tut/new-script-folder
+
+  
+sauravsuman@Sauravs-MacBook-Pro new-script-folder % vim sample-shell-script.sh
+sauravsuman@Sauravs-MacBook-Pro new-script-folder % cat sample-shell-script.sh
+#!/bin/bash
+
+
+#create a folder
+mkdir saurav
+
+#change dir
+
+cd saurav
+
+# create a file
+touch firstfle secondFile
+
+sauravsuman@Sauravs-MacBook-Pro new-script-folder % ./sample-shell-script.sh
+sauravsuman@Sauravs-MacBook-Pro new-script-folder % ./sample-shell-script.sh
+mkdir: saurav: File exists
+
+sauravsuman@Sauravs-MacBook-Pro new-script-folder % ls
+sample-shell-script.sh	saurav
+
+sauravsuman@Sauravs-MacBook-Pro new-script-folder % cd saurav
+sauravsuman@Sauravs-MacBook-Pro saurav % ls
+firstfle	secondFile
+
+organizations use shell scripting why?
+ - code management using git.
+ - infrastructure management
+ - Configuration Management.
+
+Ansible is using now datys.
+
+John -> Devops engineer for Amazon
+ - Amazon working on 10000 vm
+ - teams working for the same.
+ - for some reason he has to manage 10000 vms 
+   - monitor:
+     - node health
+       - CPU is going out
+       - Memoary is running is out
+       - linux is running very slow
+       - process is running slow
+
+ - so, john has writting a shell script ans save into git repos       
+ - a other engineer just run that shell script for 9999 vms
+ - 9999 vms is not working
+ - after execution that shell script logs into the 9999 machine capture all the logs.
+ - it's evaluates the parameters. and say memoary is 100% used.
+ - john decides do the same thing daily for all 10000 vms
+ - shell script login to each vms and try to capture all logs corress ponding to them and send email to john.
+ - with all reports.
+
+nproc command:
+ - list the cpu in your machine
+free command
+ - free memoary 
+
+top command:
+ - all running process in your machine. 
+
+executing or runninf shell script can be stopped by control + c in mac
+but what if, after pressing control + c it should not stopped
+advanced topic.
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+

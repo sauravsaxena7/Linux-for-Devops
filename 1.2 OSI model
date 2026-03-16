@@ -1,0 +1,65 @@
+1. DNS resolution
+2. TCP 3 way handshake
+difference between 2 way and 3 way handshake
+https://www.google.com
+
+3. Browser initiates HTTPS request process
+ - layer 7 application layer
+
+4. Data encryption/formatting
+ - layer 6 presentation layer.
+
+5. browser create session
+ - layer 5 seesion layter
+ - don't authenticate mulitple times.
+
+layer 7,6 and 5 are take care on browser level.
+
+6 Data segmentation.
+ - you want to upload 10GB data.
+ - splits into parts.
+ - segmentation
+ - protocols: TCP/UDP
+ - TCP is for data transmission
+ - Layer 4 transport layer
+ - for sending data in fraction od speed.
+ - large data size speed slow
+
+
+7. send the data.
+  - mulitple hops or router between your device ip network to google server ip network.
+  - shortest path will decide
+  - packet have that inforamation about source and destination ip in packet it's self.
+  - Layer 3 Networking layer
+  - packet
+
+8. send data from router to switches
+   - not understand packet
+   - only understand frames with destination mac.  
+   - LAyer 2 Data link layer
+   - frames
+
+9. send frames to optical cabel
+   - optical cable only understand 
+   - light pulses, very fast speed
+   - layer 1 pysical layer.
+
+AT google
+ - L1 - > optical cabels , switch decides
+ - L2 -> switches  , router decides
+ - L3 -> router , 
+ - L4 -> TCP or UDP will decide ., 
+ - L5 -> session validated
+ - L6 -> Data decription started
+ - L7 -> Google application, send response HTML page.
+
+ TCP-Ip model also based on OSI model
+  - L7,L6 and L5 is combined, at browser level only.
+
+
+
+
+
+
+
+

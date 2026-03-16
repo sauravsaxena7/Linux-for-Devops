@@ -1,0 +1,277 @@
+Shell script to find node health
+
+luffy@luffy-kafka-server:~/shell-script$ cat nodeHealth.sh
+#!/bin/bash
+###################
+#Author: Saurav Saxena
+#Date: 01/03/2025
+#
+#
+#This script outputs the node health
+#
+#
+#version: v1
+######################
+echo "commanf df -h print disk space"
+df -h
+
+echo "command free -g print the memoary"
+free -g
+
+echo "command nproc print number of CPU"
+nproc
+
+
+luffy@luffy-kafka-server:~/shell-script$ ./nodeHealth.sh
+commanf df -h print disk space
+Filesystem                         Size  Used Avail Use% Mounted on
+tmpfs                              491M  1.3M  490M   1% /run
+efivarfs                           256K   34K  223K  14% /sys/firmware/efi/efivars
+/dev/mapper/ubuntu--vg-ubuntu--lv  9.8G  3.6G  5.8G  38% /
+tmpfs                              2.4G     0  2.4G   0% /dev/shm
+tmpfs                              5.0M     0  5.0M   0% /run/lock
+/dev/nvme0n1p2                     1.7G  100M  1.5G   7% /boot
+/dev/nvme0n1p1                     952M  6.4M  945M   1% /boot/efi
+tmpfs                              491M   16K  491M   1% /run/user/1000
+command free -g print the memoary
+               total        used        free      shared  buff/cache   available
+Mem:               4           0           4           0           0           4
+Swap:              0           0           0
+command nproc print number of CPU
+4
+
+luffy@luffy-kafka-server:~/shell-script$ cat nodeHealth.sh
+#!/bin/bash
+###################
+#Author: Saurav Saxena
+#Date: 01/03/2025
+#
+#
+#This script outputs the node health
+#
+#
+#version: v1
+######################
+
+set -x #debug mode VVI.
+
+df -h
+
+free -g
+
+nproc
+
+
+set -x command:
+ - debug mode.
+ - shows the script command before command output
+luffy@luffy-kafka-server:~/shell-script$ ./nodeHealth.sh
++ df -h
+Filesystem                         Size  Used Avail Use% Mounted on
+tmpfs                              491M  1.3M  490M   1% /run
+efivarfs                           256K   34K  223K  14% /sys/firmware/efi/efivars
+/dev/mapper/ubuntu--vg-ubuntu--lv  9.8G  3.6G  5.8G  38% /
+tmpfs                              2.4G     0  2.4G   0% /dev/shm
+tmpfs                              5.0M     0  5.0M   0% /run/lock
+/dev/nvme0n1p2                     1.7G  100M  1.5G   7% /boot
+/dev/nvme0n1p1                     952M  6.4M  945M   1% /boot/efi
+tmpfs                              491M   16K  491M   1% /run/user/1000
++ free -g
+               total        used        free      shared  buff/cache   available
+Mem:               4           0           4           0           0           4
+Swap:              0           0           0
++ nproc
+4
+
+What are processes, how to list them and find process ID?
+ps -ef command:
+ - list all the process in details 
+ - ps -> processes
+ - -ef -> full details
+
+luffy@luffy-kafka-server:~$ ps
+    PID TTY          TIME CMD
+   2737 pts/1    00:00:00 bash
+   2753 pts/1    00:00:00 ps 
+
+List out all ther process which is run by pool_workqueue_release
+ps -ef | grep "pool_workqueue_release" command:
+ - for intergerating two commands using pipe seperator
+ - pipe parameter sends output of first command to second command 
+ - grep using for serching
+ - scrpt return 123456
+ - script | grep 5 ==> output 5
+luffy@luffy-kafka-server:~$ ps -ef | grep "pool_workqueue_release"
+root           3       2  0 16:00 ?        00:00:00 [pool_workqueue_release]
+luffy       3246    2737  0 18:08 pts/1    00:00:00 grep --color=auto pool_workqueue_release
+
+grep understandin:
+luffy@luffy-kafka-server:~$ cat grepscript.sh
+echo 1
+echo 2
+echo 11
+echo 23
+echo 55
+echo 13
+luffy@luffy-kafka-server:~$ ./grepscript.sh
+1
+2
+11
+23
+55
+13
+luffy@luffy-kafka-server:~$ ./grepscript.sh | grep 1
+1
+11
+13
+
+date command with grep command:
+luffy@luffy-kafka-server:~$ date
+Sun Mar 15 06:20:02 PM UTC 2026
+luffy@luffy-kafka-server:~$ date | echo "today is"
+today is
+
+ - pipe operator is always sends output to second command
+ - but here only print echo part, date part is missing
+date is default shell command and it's sends output in stdin. 
+pipe will not receive the output from stdin
+
+awk command:
+ - man awk command
+ - it can filter out
+ps -ef | grep "pool_workqueue_release" | awk -F" " '{print $2}'
+
+luffy@luffy-kafka-server:~$ ps -ef | grep "pool_workqueue_release" | awk -F" " '{print $2}'
+3
+3601
+luffy@luffy-kafka-server:~$ ps -ef | grep "pool_workqueue_release" | awk -F" " '{print $1}'
+root
+luffy
+
+luffy@luffy-kafka-server:~$ cat test
+My name is saurav
+My employeeId is 111
+
+luffy@luffy-kafka-server:~$ grep name test
+My name is saurav
+
+luffy@luffy-kafka-server:~$ grep name test | awk -F" " '{print $4}'
+saurav
+
+
+luffy@luffy-kafka-server:~/shell-script$ cat nodeHealth.sh
+#!/bin/bash
+###################
+#Author: Saurav Saxena
+#Date: 01/03/2025
+#
+#
+#This script outputs the node health
+#
+#
+#version: v1
+######################
+
+set -x #debug mode.
+
+#set -e #exit the script when there is an error
+set -o pipefail #
+
+#create a user, create a file, add the username to the file. 
+#if user creation failed, no use of creating file
+#
+#typing wrong command for error 
+
+wrong command: outuhbryyfhghuttjtjtg
+
+df -h
+
+free -g
+
+nproc
+
+
+ps -ef | grep "pool_workqueue_release" | awk -F" " '{print $2}'
+
+luffy@luffy-kafka-server:~/shell-script$ ./nodeHealth.sh
++ set -o pipefail
++ wrong command: outuhbryyfhghuttjtjtg
+./nodeHealth.sh: line 23: wrong: command not found
++ df -h
+Filesystem                         Size  Used Avail Use% Mounted on
+tmpfs                              491M  1.3M  490M   1% /run
+efivarfs                           256K   34K  223K  14% /sys/firmware/efi/efivars
+/dev/mapper/ubuntu--vg-ubuntu--lv  9.8G  3.9G  5.4G  43% /
+tmpfs                              2.4G     0  2.4G   0% /dev/shm
+tmpfs                              5.0M     0  5.0M   0% /run/lock
+/dev/nvme0n1p2                     1.7G  100M  1.5G   7% /boot
+/dev/nvme0n1p1                     952M  6.4M  945M   1% /boot/efi
+tmpfs                              491M   16K  491M   1% /run/user/1000
++ free -g
+               total        used        free      shared  buff/cache   available
+Mem:               4           0           3           0           1           4
+Swap:              0           0           0
++ nproc
+4
++ ps -ef
++ grep pool_workqueue_release
++ awk '-F ' '{print $2}'
+3
+3647
+
+luffy@luffy-kafka-server:~/shell-script$ cat nodeHealth.sh
+#!/bin/bash
+###################
+#Author: Saurav Saxena
+#Date: 01/03/2025
+#
+#
+#This script outputs the node health
+#
+#
+#version: v1
+######################
+
+set -x #debug mode.
+
+set -e #exit the script when there is an error
+set -o pipefail #
+
+#create a user, create a file, add the username to the file. 
+#if user creation failed, no use of creating file
+#
+#typing wrong command for error 
+
+wrong command: outuhbryyfhghuttjtjtg
+
+df -h
+
+free -g
+
+nproc
+
+
+ps -ef | grep "pool_workqueue_release" | awk -F" " '{print $2}'
+
+luffy@luffy-kafka-server:~/shell-script$ ./nodeHealth.sh
++ set -e
++ set -o pipefail
++ wrong command: outuhbryyfhghuttjtjtg
+./nodeHealth.sh: line 23: wrong: command not found
+
+set -e command:
+ - error then exit the running script.
+ - error in cmd | echo "running success ful"
+ - this script running is not going to stopped.
+ - set -e is check last of last executing command if it's pass then pass
+
+set -o pipefail command:
+ - when error after pipe seperator , script running stopeed 
+
+set -exo pipefail
+ - it's combination of debug, error and pipefail 
+
+cat logfile | grep "ERROR"
+ - if log file is stored on some other storage like google drive
+ - then what ?
+ 
