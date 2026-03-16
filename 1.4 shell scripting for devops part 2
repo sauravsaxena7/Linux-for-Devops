@@ -376,7 +376,8 @@ trap command is used to prevent to signal action like:
  - i don't want to let that happen.
 we are using trapped command 
  - in trapped command we have to metion what type of signals we need to avoid during script execution
-trap "echo don't use the ctrl + c" SIGINT^c
+- trap "echo don't use the ctrl + c" SIGINT
+- trap "rm -rf *" SIGINT
 
 
 
