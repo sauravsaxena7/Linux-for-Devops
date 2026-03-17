@@ -1,0 +1,113 @@
+#!/bin/bash
+
+
+# This script will list all the resources in the AWS account
+# Author: Saurav saxena
+# version: v0.0.1
+#
+# Following are the supported AWS services by the script
+
+# 1. EC2
+# 2. S3
+# 3. DynamoDB
+# 4. Lambda
+# 5. EBS
+# 6. ELB
+# 7. ELB
+# 8. CloudFront
+# 9. CloudWatch
+# 10. SNS
+# 11. SQS
+# 13. RouteS3
+# 14. VPC
+# 15. IAM
+
+# Usage: ./aws_resources.sh <region> <service_name>
+# Example: ./aws_resources.sh us-east-1 ec2
+
+#Check if the required number of arguments are passed.
+
+if [ $# -ne 2 ]; then
+   echo "Usage: $0 <region> <service_name>"
+   # $0 means command line argument 0 is file.sh
+   # $1 means command line argument 1 is region parameter
+   # $2 means command line argument 2 is  service name
+   exit 1
+fi
+
+# Shell script is talk to the api from aws about to get the information from AWS.
+# we need to athnticate the aws cli so we don't need authentication part again and again.
+# aws cli making api calls
+# in case of python we will use boto3 module for api calls
+
+#check if the AWS CLI is installed or not.
+
+if ! command -v aws &> /dev/null; then
+  echo "AWS CLI is not installed. please install it and try agin."
+  exit 1
+  # basically running a command and check resultunat out for corresponding command
+fi  
+
+
+# check if aws cli is configured or not
+ if [ ! -d ~/.aws ]; then
+   echo "AWS CLI is not configured. Please configure it and try again."
+   exit 1
+   # -d directory, ~/.aws -> this particular dir is not(~) exist 
+fi
+
+# if else operation is costier than switch.
+
+# Execute the AWS CLI command based on the the service name.
+
+case $2 in
+ EC2)
+   aws ec2 describe-instances --region $1
+   ;;
+ s3)
+   aws s3api list-buckets --region $1
+   ;;   
+ RDS)
+   aws rds describe-db-instances --region $1
+   ;;   
+ DynamoDb)
+   aws dynamoDB list-tables --region $1
+   ;;
+ Lambda)
+   aws lambda list-functions --region $1
+   ;;   
+ EBS)
+   aws ec2 describe-volumes --region $1
+   ;;   
+ ELB)
+   aws elb describe-load-balancers --region $1
+   ;;   
+ CloudFront)
+   aws cloudfront list-distributions --region $1
+   ;;   
+ CloudWatch)
+   aws cloudwatch list-metrics --region $1
+   ;; 
+ SNS)
+   aws sns list-topics --region $1
+   ;;  
+ SQS)
+   aws sqs list-queues --region $1
+   ;; 
+ Route53)
+   aws routes53 list-hosted-zones --region $1
+   ;;   
+ VPC)
+   aws ec2 describe-vpcs --region $1
+   ;;        
+ CloudFormation)
+   aws cloudformation list-stacks --region $1
+   ;;
+ IAM)
+   aws iam list-users --region $1
+   ;;  
+ *)
+   echo "Invalid Service name. please provide a valid service name."
+   exit 1
+   ;;    
+esac #reverse of case
